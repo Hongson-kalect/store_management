@@ -6,11 +6,13 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
 } from 'typeorm';
 import { Cart } from './Cart';
 import { Building } from './Building';
 import { ItemInfo } from './ItemInfo';
 import { ItemPrice } from './ItemPrice';
+import { Type } from './Type';
 
 @Entity({ name: 'items' })
 export class Item {
@@ -43,6 +45,9 @@ export class Item {
 
   @OneToMany(() => ItemPrice, (itemPrice) => itemPrice.item)
   itemPrices: ItemPrice[];
+
+  @ManyToMany(() => Type, (type) => type.items)
+  itemTypes: Type[];
 
   @CreateDateColumn({
     type: 'timestamp',

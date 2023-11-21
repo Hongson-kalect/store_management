@@ -25,6 +25,7 @@ import { TransactionRecord } from './typeOrm/entities/TransactionRecord';
 import { User } from './typeOrm/entities/User';
 import { UserInfo } from './typeOrm/entities/UserInfo';
 import { TransactionInfo } from './typeOrm/entities/TransactionInfo';
+import { Type } from './typeOrm/entities/Type';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { TransactionInfo } from './typeOrm/entities/TransactionInfo';
         TimeKeeping,
         TransactionRecord,
         TransactionInfo,
+        Type,
         User,
         UserInfo,
       ],

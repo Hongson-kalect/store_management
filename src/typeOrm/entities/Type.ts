@@ -2,48 +2,37 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
   ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { Building } from './Building';
-import { Type } from './Type';
+import { Item } from './Item';
+import { Food } from './Food';
 
-@Entity({ name: 'foods' })
-export class Food {
+@Entity({ name: 'types' })
+export class Type {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
 
-  @Column()
-  rollNo: string;
-
   @Column({ type: 'text' })
   describe: string;
 
-  @Column()
-  price: string;
+  @ManyToMany(() => Building, (building) => building.bussinessTypes)
+  @JoinTable({ name: 'buildings_types' })
+  buildings: Building[];
 
-  @Column({ type: 'text' })
-  image: string;
+  @ManyToMany(() => Item, (item) => item.itemTypes)
+  @JoinTable({ name: 'items_types' })
+  items: Item[];
 
-  @Column()
-  discount: string;
-
-  @Column()
-  tag: string;
-
-  @Column()
-  quantity: number;
-
-  @ManyToOne(() => Building, (building) => building.foods)
-  building: Building;
-
-  @ManyToMany(() => Type, (type) => type.foods)
-  foodTypes: Type[];
+  @ManyToMany(() => Food, (food) => food.foodTypes)
+  @JoinTable({ name: 'foods_types' })
+  foods: Food[];
 
   // @Column({ type: 'bigint' })
   // created_at: number;

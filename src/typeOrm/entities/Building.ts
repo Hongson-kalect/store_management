@@ -5,6 +5,7 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
 } from 'typeorm';
 import { Cart } from './Cart';
 import { Food } from './Food';
@@ -12,6 +13,7 @@ import { ImExport } from './ImExport';
 import { Item } from './Item';
 import { Role } from './Role';
 import { Room } from './Room';
+import { Type } from './Type';
 
 @Entity({ name: 'buildings' })
 export class Building {
@@ -37,7 +39,10 @@ export class Building {
   phone: string;
 
   @Column()
-  type: string;
+  openTime: string; //Array to have different time depend on day [8:00-12:00,8:00-12:00,8:00-12:00,8:00-12:00,...] for open on all day of week, [8:00-12:00, 10:00-12:00, ..., close] for close on weekend
+
+  @ManyToMany(() => Type, (type) => type.buildings)
+  bussinessTypes: Type[];
 
   @OneToMany(() => Cart, (cart) => cart.building)
   carts: Cart[];
