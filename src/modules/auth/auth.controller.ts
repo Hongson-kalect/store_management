@@ -1,20 +1,8 @@
-import {
-  Body,
-  Controller,
-  Post,
-  HttpCode,
-  HttpStatus,
-  Get,
-  Request,
-} from '@nestjs/common';
+import { Body, Controller, Post, HttpCode, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { Public } from './guard.metadata';
-import { SigninDto } from 'src/typedto/auth.dto';
-import {
-  ResponseData,
-  ResponseMessage,
-  ResponseStatus,
-} from 'src/interfaces/global.type';
+import { ResponseData, ResponseMessage } from 'src/interfaces/global.type';
+import { SigninDto, SignupDto } from './auth.type';
+import { Public } from '../utils/guard/guard.jwt.metadata';
 
 @Controller('auth')
 export class AuthController {
@@ -26,21 +14,18 @@ export class AuthController {
   async signIn(@Body() signInDto: SigninDto) {
     return new ResponseData(
       await this.authService.signIn(signInDto),
-      ResponseStatus.SUCCESS,
+      HttpStatus.OK,
       ResponseMessage.SUCCESS,
     );
   }
 
-  @Get('test')
-  protectedRoute(@Request() req) {
-    console.log(req.user);
-    return 'hello world';
-  }
-
   @Public()
-  @Get('pl')
-  publicRoute() {
-    console.log('public');
-    return 'public ROute';
+  @Post('sign-up')
+  async signUp(@Body() signUpDto: SignupDto) {
+    return new ResponseData(
+      await this.authService.signUp(signUpDto),
+      HttpStatus.OK,
+      ResponseMessage.SUCCESS,
+    );
   }
 }

@@ -8,7 +8,6 @@ import {
   UpdateDateColumn,
   ManyToMany,
 } from 'typeorm';
-import { Cart } from './Cart';
 import { Building } from './Building';
 import { ItemInfo } from './ItemInfo';
 import { ItemPrice } from './ItemPrice';
@@ -37,9 +36,6 @@ export class Item {
   @ManyToOne(() => Building, (building) => building.items)
   building: Building;
 
-  @OneToMany(() => Cart, (cart) => cart.item)
-  carts: Cart[];
-
   @OneToMany(() => ItemInfo, (itemInfo) => itemInfo.item)
   itemInfos: ItemInfo[];
 
@@ -50,15 +46,15 @@ export class Item {
   itemTypes: Type[];
 
   @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   public created_at: Date;
 
   @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
   })
   public updated_at: Date;
 }

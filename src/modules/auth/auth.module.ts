@@ -2,33 +2,33 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UserModules } from '../users/user.module';
-import { JwtModule, JwtModuleAsyncOptions } from '@nestjs/jwt';
-import { AuthGuard } from './auth.guard';
-import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/typeOrm/entities/User';
+import { Device } from 'src/typeOrm/entities/Device';
+import { Confirm } from 'src/typeOrm/entities/Confirm';
 
-const jwtConfig: JwtModuleAsyncOptions = {
-  useFactory: () => {
-    return {
-      global: true,
-    };
-  },
-};
+import { AppJwtModule } from '../utils/jwt/jwt.module';
+import { MailModule } from '../utils/mail/mail.module';
+import { HistoryRequestModule } from '../historyRequest/historyRequest.module';
+import { LoginHistoryModule } from '../LoginHistory/loginHistory.module';
+// import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
+    AppJwtModule,
+    MailModule,
     UserModules,
-    JwtModule.register(jwtConfig),
-    TypeOrmModule.forFeature([User]),
+    HistoryRequestModule,
+    LoginHistoryModule,
+    TypeOrmModule.forFeature([User, Device, Confirm]),
+    // ThrottlerModule.forRoot([
+    //   {
+    //     ttl: 10,
+    //     limit:5
+    //   }
+    // ]),
   ],
-  providers: [
-    AuthService,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
-  ],
+  providers: [AuthService],
   controllers: [AuthController],
   exports: [AuthService],
 })

@@ -27,16 +27,16 @@ export class Food {
   @Column()
   price: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   image: string;
 
-  @Column()
+  @Column({ default: '0' })
   discount: string;
 
-  @Column()
+  @Column({ nullable: true })
   tag: string;
 
-  @Column()
+  @Column({ default: 0 })
   quantity: number;
 
   @ManyToOne(() => Building, (building) => building.foods)
@@ -51,15 +51,15 @@ export class Food {
   // @Column({ type: 'bigint' })
   // updatedAt: number;
   @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   public created_at: Date;
 
   @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
   })
   public updated_at: Date;
 }

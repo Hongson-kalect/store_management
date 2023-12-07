@@ -26,11 +26,65 @@ import { User } from './typeOrm/entities/User';
 import { UserInfo } from './typeOrm/entities/UserInfo';
 import { TransactionInfo } from './typeOrm/entities/TransactionInfo';
 import { Type } from './typeOrm/entities/Type';
+import { Device } from './typeOrm/entities/Device';
+import { LoginHis } from './typeOrm/entities/LoginHis';
+import { RequestHis } from './typeOrm/entities/RequestHis';
+import { GuardJwtModule } from './modules/utils/guard/guard.jwt.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { InterCeptor } from './modules/utils/intercepters/intercepter';
+import { HistoryRequestModule } from './modules/historyRequest/historyRequest.module';
+import { InterCeptorModule } from './modules/utils/intercepters/intercepter.module';
+import { BuildingModule } from './modules/building/building.module';
+import { CartModule } from './modules/cart/cart.module';
+import { ConfirmModule } from './modules/confirm/confirm.module';
+import { DeviceModule } from './modules/device/device.module';
+import { FeeModule } from './modules/fee/fee.module';
+import { FoodModule } from './modules/food/food.module';
+import { ImExportModule } from './modules/imExport/imExport.module';
+import { ItemModule } from './modules/item/item.module';
+import { ItemInfoModule } from './modules/itemInfo/itemInfo.module';
+import { ItemPriceModule } from './modules/itemPrice/itemPrice.module';
+import { LoginHistoryModule } from './modules/LoginHistory/loginHistory.module';
+import { ProviderModule } from './modules/provider/provider.module';
+import { RecordModule } from './modules/record/record.module';
+import { RoleModule } from './modules/role/role.module';
+import { RoomModule } from './modules/room/room.module';
+import { RoomPriceModule } from './modules/roomPrice/roomPrice.module';
+import { TimeKeepingModule } from './modules/timeKeeping/timeKeeping.module';
+import { TransactionInfoModule } from './modules/transactionInfo/transactionInfo.module';
+import { TransactionRecordModule } from './modules/transactionRecord/transactionRecord.module';
+import { TypeModule } from './modules/type/type.module';
+import { UserInfoModule } from './modules/userInfo/userInfo.module';
 
 @Module({
   imports: [
-    UserModules,
     AuthModule,
+    BuildingModule,
+    CartModule,
+    ConfirmModule,
+    DeviceModule,
+    FeeModule,
+    FoodModule,
+    HistoryRequestModule,
+    ImExportModule,
+    ItemModule,
+    ItemInfoModule,
+    ItemPriceModule,
+    LoginHistoryModule,
+    ProviderModule,
+    RecordModule,
+    RoleModule,
+    RoomModule,
+    RoomPriceModule,
+    TimeKeepingModule,
+    TransactionInfoModule,
+    TransactionRecordModule,
+    TypeModule,
+    UserInfoModule,
+    UserModules,
+
+    GuardJwtModule,
+    InterCeptorModule,
     // TypeOrmModule.forRoot({
     //   type: 'mysql',
     //   host: 'localhost',
@@ -75,14 +129,17 @@ import { Type } from './typeOrm/entities/Type';
           Building,
           Cart,
           Confirm,
+          Device,
           Fee,
           Food,
           ImExport,
           Item,
           ItemInfo,
           ItemPrice,
+          LoginHis,
           Provider,
           Record,
+          RequestHis,
           Role,
           Room,
           RoomPrice,
@@ -94,6 +151,7 @@ import { Type } from './typeOrm/entities/Type';
           UserInfo,
         ],
         synchronize: true,
+        // logging: true,
       }),
     }),
     ConfigModule.forRoot({
@@ -101,6 +159,12 @@ import { Type } from './typeOrm/entities/Type';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: InterCeptor,
+    },
+  ],
 })
 export class AppModule {}

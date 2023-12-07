@@ -2,10 +2,9 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
-  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 import { Building } from './Building';
 
@@ -21,10 +20,9 @@ export class Fee {
   value: string;
 
   @Column()
-  type: string;
+  type: string; //Ngay, thang, hay nam
 
-  @OneToOne(() => Building)
-  @JoinColumn()
+  @ManyToOne(() => Building, (building) => building.fee)
   building: Building;
 
   // @Column({ type: 'bigint' })
@@ -33,15 +31,15 @@ export class Fee {
   // @Column({ type: 'bigint' })
   // updatedAt: number;
   @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   public created_at: Date;
 
   @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
   })
   public updated_at: Date;
 }

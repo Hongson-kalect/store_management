@@ -14,6 +14,7 @@ import { Item } from './Item';
 import { Role } from './Role';
 import { Room } from './Room';
 import { Type } from './Type';
+import { Fee } from './Fee';
 
 @Entity({ name: 'buildings' })
 export class Building {
@@ -62,21 +63,24 @@ export class Building {
   @OneToMany(() => Room, (room) => room.building)
   rooms: Room[];
 
+  @OneToMany(() => Fee, (fee) => fee.building)
+  fee: Fee[];
+
   // @Column({ type: 'bigint' })
   // created_at: number;
 
   // @Column({ type: 'bigint' })
   // updatedAt: number;
   @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   public created_at: Date;
 
   @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
   })
   public updated_at: Date;
 }

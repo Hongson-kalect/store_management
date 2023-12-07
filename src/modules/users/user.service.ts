@@ -1,37 +1,63 @@
-import { Injectable, HttpException } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { User } from 'src/typeOrm/entities/User';
 import { CreateUserParams } from 'src/interfaces/user.type';
-import { SigninParams } from 'src/interfaces/auth.type';
+import { DeleteUserParams, SigninParams } from './user.type';
 
 @Injectable()
 export class UserSevices {
-  constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
-  ) {}
+  constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
 
-  async getUser() {
-    const user = await this.userRepository.find({
-      relations: ['profile', 'record'],
-    });
-    return user;
-  }
+  getUsers = async (getCartParams?: { id?: number[] }) => {
+    if (getCartParams.id?.length > 0) {
+      return await this.userRepo.find({
+        where: {
+          id: In(getCartParams.id),
+        },
+        relations: {
+          profile: true,
+        },
+      });
+    }
 
-  async getUserByid(id: number) {
-    const user = await this.userRepository.findOne({
-      relations: ['profile', 'record'],
-      where: {
-        id: id,
+    return await this.userRepo.find();
+  };
+
+  getUserById = async (id: number) => {
+    const building = await this.userRepo.findOne({
+      where: { id: id },
+      relations: {
+        carts: true,
+        loginHis: true,
+        profile: true,
+        records: true,
+        roles: true,
+        devices: true,
+        transactions: true,
+        requestHis: true,
       },
     });
 
-    if (!user) throw new HttpException('', 400);
+    if (!building)
+      throw new HttpException('No building found', HttpStatus.NOT_FOUND);
+    return building;
+  };
+
+  async getUserByEmail(email: string) {
+    const user = await this.userRepo.findOne({
+      relations: ['profile'],
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user) return false;
     return user;
   }
 
   async findUser(signInParams: SigninParams) {
-    const user = await this.userRepository.findOne({
+    const user = await this.userRepo.findOne({
       where: {
         username: signInParams.username,
         password: signInParams.password,
@@ -45,5 +71,16 @@ export class UserSevices {
     console.log(user);
 
     return user;
+  }
+
+  async deleteUser(deleteUserParams: DeleteUserParams) {
+    const user = await this.userRepo.findOneBy({
+      id: deleteUserParams.id,
+    });
+
+    if (!user) throw new HttpException('No user found', HttpStatus.NOT_FOUND);
+
+    this.userRepo.softRemove(user);
+    return 'Delete success';
   }
 }

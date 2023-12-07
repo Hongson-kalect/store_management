@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { User } from './User';
 import { Building } from './Building';
-import { Item } from './Item';
+import { ItemInfo } from './ItemInfo';
 
 @Entity({ name: 'carts' })
 export class Cart {
@@ -18,14 +18,17 @@ export class Cart {
   @Column()
   quantity: number;
 
-  @Column()
+  @Column({ default: false })
   isConfirm: boolean;
+
+  @Column()
+  state: string; //added | confirmed | deliverying | finished | failed | canceled
 
   @ManyToOne(() => User, (user) => user.carts)
   user: User;
 
-  @ManyToOne(() => Item, (item) => item.carts)
-  item: Item;
+  @ManyToOne(() => ItemInfo, (item) => item.carts)
+  itemInfo: ItemInfo;
 
   @ManyToOne(() => Building, (building) => building.carts)
   building: Building;
@@ -36,15 +39,15 @@ export class Cart {
   // @Column({ type: 'bigint' })
   // updatedAt: number;
   @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   public created_at: Date;
 
   @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
   })
   public updated_at: Date;
 }

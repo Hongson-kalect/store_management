@@ -3,11 +3,10 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
-  OneToOne,
-  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
 import { User } from './User';
 import { Building } from './Building';
 
@@ -22,9 +21,14 @@ export class Confirm {
   @Column()
   value: string;
 
-  @OneToOne(() => User)
-  @JoinColumn()
-  user: User;
+  @Column({ type: 'text', nullable: true })
+  information: string;
+
+  @Column({ default: false })
+  isConfirm: boolean;
+
+  @Column()
+  email: string;
 
   @ManyToOne(() => User, (building) => building.id)
   building: Building;
@@ -34,16 +38,27 @@ export class Confirm {
 
   // @Column({ type: 'bigint' })
   // updatedAt: number;
+
   @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   public created_at: Date;
 
   @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
   })
   public updated_at: Date;
+
+  // insertCreated() {
+  //   this.created_at = new Date();
+  //   this.updated_at = new Date();
+  // }
+
+  // @BeforeUpdate()
+  // insertUpdated() {
+  //   this.updated_at = new Date();
+  // }
 }

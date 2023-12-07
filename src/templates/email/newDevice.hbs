@@ -1,0 +1,27 @@
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Có thiết bị lạ</title>
+    <style>
+      .center{ padding:32px display: flex; align-self: center; justify-content:
+      center; }
+    </style>
+  </head>
+  <body>
+    <h2>CẢNH BÁO BẢO MẬT </h2>
+    <p>Chào {{email}}. </p>
+    <p>Chúng tôi nhận được yêu cầu đăng nhập từ thiết bị lạ trong chương trình
+      quản lý nhà hàng.</p>
+    <p>Nếu đó là bạn, vui lòng:</p>
+    <div class='center'>
+      <button class='btn'><a
+          href='http://localhost:3331/confirm/new-device/'
+          +
+          {{validateString}}
+        >Nhấn vào đây</a></button>
+    </div>
+    <p>Nếu đó không phải bạn, bạn cần đổi mật khẩu ngay, tài khoản mật khẩu của
+      bạn đã bị lộ.</p>
+  </body>
+</html>

@@ -22,6 +22,9 @@ export class Type {
   @Column({ type: 'text' })
   describe: string;
 
+  @Column({ default: 'building' })
+  category: string; //building | food | item | ... define what this type using for
+
   @ManyToMany(() => Building, (building) => building.bussinessTypes)
   @JoinTable({ name: 'buildings_types' })
   buildings: Building[];
@@ -40,15 +43,15 @@ export class Type {
   // @Column({ type: 'bigint' })
   // updatedAt: number;
   @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   public created_at: Date;
 
   @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
   })
   public updated_at: Date;
 }
