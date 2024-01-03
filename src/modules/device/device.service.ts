@@ -31,6 +31,7 @@ export class DeviceService {
       throw new HttpException('No building found', HttpStatus.NOT_FOUND);
     return building;
   };
+
   createDevice = async (createDeviceParams: CreateDeviceParams) => {
     const newLogin = this.deviceRepo.create({
       name: createDeviceParams.name,
@@ -38,5 +39,11 @@ export class DeviceService {
 
     const saved = await this.deviceRepo.save(newLogin);
     return saved.id;
+  };
+  deleteDevice = async (id: number) => {
+    const device = await this.deviceRepo.findOneBy({ id });
+
+    if (!id) throw new HttpException('Device Not Found', HttpStatus.NOT_FOUND);
+    return await this.deviceRepo.remove(device);
   };
 }

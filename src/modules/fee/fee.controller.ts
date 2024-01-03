@@ -9,7 +9,21 @@ export class FeeController {
 
   @Public()
   @Get()
-  async getHistoryRequest() {
+  async getFee() {
+    try {
+      return {
+        data: await this.typeService.getFees(),
+        status: ResponseStatus.SUCCESS,
+        message: ResponseMessage.SUCCESS,
+      };
+    } catch (error) {
+      throw new HttpException(ResponseMessage.ERROR, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @Get()
+  async createFee() {
+    //continue
     try {
       return {
         data: await this.typeService.getFees(),
