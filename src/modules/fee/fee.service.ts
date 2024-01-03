@@ -51,4 +51,11 @@ export class FeeService {
     const saved = await this.feeRepo.save(newLogin);
     return saved.id;
   };
+
+  deleteFee = async (id: number) => {
+    const fee = await this.feeRepo.findOneBy({ id: id });
+    if (!fee) throw new HttpException('Fee not found', HttpStatus.NOT_FOUND);
+
+    this.feeRepo.softRemove(fee);
+  };
 }

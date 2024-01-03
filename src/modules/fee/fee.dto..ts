@@ -15,5 +15,5 @@ export class CreateFeeDto {
 
   @IsNumber()
   @IsNotEmpty()
-  buildingId: string;
+  buildingId: number;
 }
