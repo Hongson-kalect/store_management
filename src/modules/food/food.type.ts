@@ -8,5 +8,5 @@ export type CreateFoodParams = {
   tag?: string[];
   quantity: number;
   buildingId: number;
-  foodTypes: number[];
+  foodTypeId: number[];
 };

@@ -42,7 +42,7 @@ export class FoodService {
       createFoodParams.buildingId,
     );
     const foodType = await this.typeService.getTypes({
-      id: createFoodParams.foodTypes,
+      id: createFoodParams.foodTypeId,
     });
 
     const newFood = this.foodRepo.create({
@@ -60,5 +60,11 @@ export class FoodService {
 
     const saved = await this.foodRepo.save(newFood);
     return saved.id;
+  };
+
+  deleteFood = async (id: number) => {
+    const food = await this.foodRepo.findOneBy({ id });
+    if (!food) throw new HttpException('No Food Founf', HttpStatus.NOT_FOUND);
+    await this.foodRepo.remove(food);
   };
 }

@@ -22,12 +22,15 @@ export class CreateFoodDto {
   @IsArray()
   tag: string[];
 
+  @IsNotEmpty()
   @IsNumber()
   quantity: number;
 
+  @IsNotEmpty()
+  @IsNumber()
   buildingId: number;
 
   @IsNotEmpty()
   @IsArray()
-  foodTypes: number[];
+  foodTypeId: number[];
 }

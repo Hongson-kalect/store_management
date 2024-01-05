@@ -32,7 +32,7 @@ export class HistoryRequestService {
     return building;
   };
 
-  createRequestHistory = async (createHistoryParams: CreateHistoryParams) => {
+  createHistoryRequest = async (createHistoryParams: CreateHistoryParams) => {
     const newRequest = this.historyRequestRepo.create({
       user: createHistoryParams.user,
       url: createHistoryParams.url,
@@ -45,5 +45,11 @@ export class HistoryRequestService {
 
   requestSuccess = async (id: number) => {
     await this.historyRequestRepo.save({ id: id, isSucess: true });
+  };
+
+  deleteHistoryRequest = async (id: number) => {
+    const request = await this.historyRequestRepo.findOneBy({ id: id });
+    if (!request)
+      throw new HttpException('No History Request Found', HttpStatus.NOT_FOUND);
   };
 }

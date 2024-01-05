@@ -48,4 +48,10 @@ export class ImExportService {
       // *** get item by itemId listenerCount, depend on quantity, subtract item quantity in itemInfo sort by productionTime...
     }
   };
+  deleteImExport = async (id: number) => {
+    const imExport = await this.imExportRepo.findOneBy({ id });
+    if (!imExport)
+      throw new HttpException('ImExport not found', HttpStatus.NOT_FOUND);
+    return await this.imExportRepo.softRemove(imExport);
+  };
 }
