@@ -5,7 +5,9 @@ import { ValidationPipe } from '@nestjs/common';
 // import { InterCeptor } from './modules/utils/intercepters/intercepter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    rawBody: true,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Store management API')

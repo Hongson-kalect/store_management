@@ -2,8 +2,10 @@ import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { Public } from '../utils/guard/guard.jwt.metadata';
 import { RoleService } from './role.service';
 import { ResponseMessage, ResponseStatus } from 'src/interfaces/global.type';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('type')
+@ApiTags('Role')
+@Controller('role')
 export class RoleController {
   constructor(private typeService: RoleService) {}
 

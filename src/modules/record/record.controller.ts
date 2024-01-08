@@ -2,8 +2,10 @@ import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { Public } from '../utils/guard/guard.jwt.metadata';
 import { RecordService } from './record.service';
 import { ResponseMessage, ResponseStatus } from 'src/interfaces/global.type';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('type')
+@ApiTags('Record')
+@Controller('Record')
 export class RecordController {
   constructor(private typeService: RecordService) {}
 

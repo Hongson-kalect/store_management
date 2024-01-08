@@ -3,7 +3,9 @@ import { ConfirmService } from './confirm.service';
 import { ResponseData, ResponseMessage } from 'src/interfaces/global.type';
 import { VerifyDto } from './confirm.type';
 import { Public } from '../utils/guard/guard.jwt.metadata';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Confirm')
 @Controller('confirm')
 export class ConfirmController {
   constructor(private confirmService: ConfirmService) {}

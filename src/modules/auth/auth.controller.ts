@@ -3,7 +3,9 @@ import { AuthService } from './auth.service';
 import { ResponseData, ResponseMessage } from 'src/interfaces/global.type';
 import { SigninDto, SignupDto } from './auth.type';
 import { Public } from '../utils/guard/guard.jwt.metadata';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}

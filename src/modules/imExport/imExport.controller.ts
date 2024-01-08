@@ -13,8 +13,10 @@ import { Public } from '../utils/guard/guard.jwt.metadata';
 import { ImExportService } from './imExport.service';
 import { ResponseMessage, ResponseStatus } from 'src/interfaces/global.type';
 import { CreateImExportDto } from './imExport.dto.';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('type')
+@ApiTags('Import Export')
+@Controller('imExport')
 export class ImExportController {
   constructor(private typeService: ImExportService) {}
 

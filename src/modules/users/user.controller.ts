@@ -14,7 +14,9 @@ import { ResponseMessage, ResponseStatus } from 'src/interfaces/global.type';
 import { CreateUserDto } from '../../typedto/userDto';
 import { DeleteUserDto } from './user.dto';
 import { Public } from '../utils/guard/guard.jwt.metadata';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(private userServices: UserSevices) {}
@@ -23,12 +25,14 @@ export class UserController {
   @Get()
   async getUser() {
     try {
+      console.log(3);
       return {
         data: await this.userServices.getUsers(),
         status: ResponseStatus.SUCCESS,
         message: ResponseMessage.SUCCESS,
       };
     } catch (error) {
+      console.log(error);
       throw new HttpException(ResponseMessage.ERROR, HttpStatus.BAD_REQUEST);
     }
   }
@@ -62,7 +66,7 @@ export class UserController {
     }
   }
   @Delete(':id')
-  async deleteUser(@Param(':id', ParseIntPipe) deleteUserDto: DeleteUserDto) {
+  async deleteUser(@Param('id', ParseIntPipe) deleteUserDto: DeleteUserDto) {
     try {
       return {
         data: await this.userServices.deleteUser(deleteUserDto),

@@ -13,10 +13,10 @@ export class LoginHistoryService {
   ) {}
 
   getLoginHistorys = async (getCartParams?: { id?: number[] }) => {
-    if (getCartParams.id?.length > 0) {
+    if (getCartParams?.id?.length > 0) {
       return await this.loginHistoryRepo.find({
         where: {
-          id: In(getCartParams.id),
+          id: In(getCartParams?.id),
         },
       });
     }

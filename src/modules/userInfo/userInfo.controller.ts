@@ -2,8 +2,10 @@ import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { Public } from '../utils/guard/guard.jwt.metadata';
 import { UserInfoService } from './userInfo.service';
 import { ResponseMessage, ResponseStatus } from 'src/interfaces/global.type';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('type')
+@ApiTags('User Info')
+@Controller('user-info')
 export class UserInfoController {
   constructor(private typeService: UserInfoService) {}
 

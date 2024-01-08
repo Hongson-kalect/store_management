@@ -10,10 +10,10 @@ export class UserSevices {
   constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
 
   getUsers = async (getCartParams?: { id?: number[] }) => {
-    if (getCartParams.id?.length > 0) {
+    if (getCartParams?.id?.length > 0) {
       return await this.userRepo.find({
         where: {
-          id: In(getCartParams.id),
+          id: In(getCartParams?.id),
         },
         relations: {
           profile: true,
@@ -21,7 +21,9 @@ export class UserSevices {
       });
     }
 
-    return await this.userRepo.find();
+    const data = await this.userRepo.find();
+    console.log(data);
+    return data;
   };
 
   getUserById = async (id: number) => {
@@ -75,7 +77,7 @@ export class UserSevices {
 
   async deleteUser(deleteUserParams: DeleteUserParams) {
     const user = await this.userRepo.findOneBy({
-      id: deleteUserParams.id,
+      id: deleteUserParams?.id,
     });
 
     if (!user) throw new HttpException('No user found', HttpStatus.NOT_FOUND);

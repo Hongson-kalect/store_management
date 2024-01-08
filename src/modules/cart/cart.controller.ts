@@ -17,7 +17,9 @@ import {
   ResponseStatus,
 } from 'src/interfaces/global.type';
 import { CreateCartDto } from './cart.dto.';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Cart')
 @Controller('cart')
 export class CartController {
   constructor(private cartService: CartService) {}
@@ -38,7 +40,7 @@ export class CartController {
 
   @Public()
   @Get(':id')
-  async getCartById(@Param(':id', ParseIntPipe) id: number) {
+  async getCartById(@Param('id', ParseIntPipe) id: number) {
     try {
       return {
         data: await this.cartService.getCartById(id),

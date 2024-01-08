@@ -12,7 +12,9 @@ import { Public } from '../utils/guard/guard.jwt.metadata';
 import { FeeService } from './fee.service';
 import { ResponseMessage, ResponseStatus } from 'src/interfaces/global.type';
 import { CreateFeeDto } from './fee.dto.';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Fee')
 @Controller('fee')
 export class FeeController {
   constructor(private feeService: FeeService) {}

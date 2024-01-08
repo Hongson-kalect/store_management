@@ -13,14 +13,14 @@ export class UserInfoService {
   ) {}
 
   getUserInfo = async (getUserInfoParams?: { id?: number | number[] }) => {
-    if (typeof getUserInfoParams.id === 'number') {
-      return await this.typeRepo.findOneBy({ id: getUserInfoParams.id });
+    if (typeof getUserInfoParams?.id === 'number') {
+      return await this.typeRepo.findOneBy({ id: getUserInfoParams?.id });
     }
 
-    if (getUserInfoParams.id?.length > 0) {
+    if (getUserInfoParams?.id?.length > 0) {
       return await this.typeRepo.find({
         where: {
-          id: In(getUserInfoParams.id),
+          id: In(getUserInfoParams?.id),
         },
       });
     }

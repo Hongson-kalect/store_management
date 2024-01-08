@@ -15,10 +15,10 @@ export class BuildingService {
   ) {}
 
   getBuilding = async (getTypeParams?: { id?: number[] }) => {
-    if (getTypeParams.id?.length > 0) {
+    if (getTypeParams?.id?.length > 0) {
       return await this.buildingRepo.find({
         where: {
-          id: In(getTypeParams.id),
+          id: In(getTypeParams?.id),
         },
       });
     }

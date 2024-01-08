@@ -16,14 +16,9 @@ export class InterCeptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler,
   ): Promise<Observable<any>> {
-    console.log('where this is');
     const ctx = context.switchToHttp();
     // const response = ctx.getResponse();
     const request: CustomRequest = ctx.getRequest();
-    // console.log(request.body);
-    // console.log(request.url);
-    // console.log(request.baseUrl);
-    // console.log(request.originalUrl);
     const requestParams = {
       body: request.body,
       params: request.params,
@@ -41,7 +36,6 @@ export class InterCeptor implements NestInterceptor {
 
     return next.handle().pipe(
       tap(async (responseBody) => {
-        console.log('cc');
         if (responseBody)
           await this.historyRequestService.requestSuccess(requestId);
       }),

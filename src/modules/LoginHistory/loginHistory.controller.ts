@@ -2,7 +2,9 @@ import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { Public } from '../utils/guard/guard.jwt.metadata';
 import { LoginHistoryService } from './loginHistory.service';
 import { ResponseMessage, ResponseStatus } from 'src/interfaces/global.type';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Login History')
 @Controller('login-history')
 export class LoginHistoryController {
   constructor(private loginHistoryService: LoginHistoryService) {}

@@ -13,7 +13,9 @@ import { Public } from '../utils/guard/guard.jwt.metadata';
 import { HistoryRequestService } from './historyRequest.service';
 import { ResponseMessage, ResponseStatus } from 'src/interfaces/global.type';
 import { CreateHistoryRequestDto } from './historyRequest.dto.';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('History Request')
 @Controller('history-request')
 export class HistoryRequestController {
   constructor(private historyRequestService: HistoryRequestService) {}

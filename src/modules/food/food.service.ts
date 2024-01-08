@@ -17,23 +17,30 @@ export class FoodService {
   ) {}
 
   getFoods = async (getCartParams?: { id?: number[] }) => {
-    if (getCartParams.id?.length > 0) {
-      return await this.foodRepo.find({
+    let foods: Food[];
+    if (getCartParams?.id?.length > 0) {
+      foods = await this.foodRepo.find({
         where: {
-          id: In(getCartParams.id),
+          id: In(getCartParams?.id),
         },
       });
     }
 
-    return await this.foodRepo.find();
+    foods = await this.foodRepo.find();
+    foods.forEach((food) => {
+      food.image = JSON.parse(food.image);
+      food.tag = JSON.parse(food.tag);
+    });
+    return foods;
   };
 
   getFoodById = async (id: number) => {
-    const building = await this.foodRepo.findOneBy({ id: id });
+    const food = await this.foodRepo.findOneBy({ id: id });
+    food.image = JSON.parse(food.image);
+    food.tag = JSON.parse(food.tag);
 
-    if (!building)
-      throw new HttpException('No building found', HttpStatus.NOT_FOUND);
-    return building;
+    if (!food) throw new HttpException('No food found', HttpStatus.NOT_FOUND);
+    return food;
   };
 
   createFood = async (createFoodParams: CreateFoodParams) => {
@@ -64,7 +71,7 @@ export class FoodService {
 
   deleteFood = async (id: number) => {
     const food = await this.foodRepo.findOneBy({ id });
-    if (!food) throw new HttpException('No Food Founf', HttpStatus.NOT_FOUND);
+    if (!food) throw new HttpException('No Food Found', HttpStatus.NOT_FOUND);
     await this.foodRepo.remove(food);
   };
 }

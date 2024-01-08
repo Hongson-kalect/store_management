@@ -16,7 +16,9 @@ import {
   ResponseStatus,
 } from 'src/interfaces/global.type';
 import { CreateDeviceDto, DeleteDeviceDTO } from './device.dto.';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Device')
 @Controller('device')
 export class DeviceController {
   constructor(private deviceService: DeviceService) {}

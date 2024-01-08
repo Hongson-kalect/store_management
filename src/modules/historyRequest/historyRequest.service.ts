@@ -13,10 +13,10 @@ export class HistoryRequestService {
   ) {}
 
   getHistoryRequests = async (getCartParams?: { id?: number[] }) => {
-    if (getCartParams.id?.length > 0) {
+    if (getCartParams?.id?.length > 0) {
       return await this.historyRequestRepo.find({
         where: {
-          id: In(getCartParams.id),
+          id: In(getCartParams?.id),
         },
       });
     }
@@ -33,11 +33,13 @@ export class HistoryRequestService {
   };
 
   createHistoryRequest = async (createHistoryParams: CreateHistoryParams) => {
+    console.log(1);
     const newRequest = this.historyRequestRepo.create({
       user: createHistoryParams.user,
       url: createHistoryParams.url,
       params: createHistoryParams.params,
     });
+    console.log(newRequest);
 
     const saved = await this.historyRequestRepo.save(newRequest);
     return saved.id;
