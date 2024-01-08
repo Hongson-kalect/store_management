@@ -12,6 +12,7 @@ import {
 import { Public } from '../utils/guard/guard.jwt.metadata';
 import { HistoryRequestService } from './historyRequest.service';
 import { ResponseMessage, ResponseStatus } from 'src/interfaces/global.type';
+import { CreateHistoryRequestDto } from './historyRequest.dto.';
 
 @Controller('history-request')
 export class HistoryRequestController {

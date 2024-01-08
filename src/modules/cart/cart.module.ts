@@ -3,14 +3,14 @@ import { CartService } from './cart.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CartController } from './cart.controller';
 import { Cart } from 'src/typeOrm/entities/Cart';
-import { ItemInfo } from 'src/typeOrm/entities/ItemInfo';
-import { Item } from 'src/typeOrm/entities/Item';
 import { BuildingModule } from '../building/building.module';
+import { ItemInfoModule } from '../itemInfo/itemInfo.module';
+import { ItemModule } from '../item/item.module';
 
 @Module({
   imports: [
-    Item,
-    ItemInfo,
+    ItemModule,
+    ItemInfoModule,
     forwardRef(() => BuildingModule),
     TypeOrmModule.forFeature([Cart]),
   ],

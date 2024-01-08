@@ -30,7 +30,7 @@ export class InterCeptor implements NestInterceptor {
       query: request.query,
     };
 
-    const requestId = await this.historyRequestService.createRequestHistory({
+    const requestId = await this.historyRequestService.createHistoryRequest({
       url: request.url,
       params: JSON.stringify(requestParams),
     });
