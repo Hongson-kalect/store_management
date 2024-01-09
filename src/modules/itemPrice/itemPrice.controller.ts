@@ -5,7 +5,7 @@ import { ResponseMessage, ResponseStatus } from 'src/interfaces/global.type';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Item Price')
-@Controller('type')
+@Controller('item-price')
 export class ItemPriceController {
   constructor(private typeService: ItemPriceService) {}
 

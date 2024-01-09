@@ -151,7 +151,7 @@ import { UserInfoModule } from './modules/userInfo/userInfo.module';
           UserInfo,
         ],
         synchronize: true,
-        logging: true,
+        // logging: true,
       }),
     }),
     ConfigModule.forRoot({

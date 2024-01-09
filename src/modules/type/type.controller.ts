@@ -61,6 +61,7 @@ export class TypeController {
       throw new HttpException(ResponseMessage.ERROR, HttpStatus.BAD_REQUEST);
     }
   }
+
   @Public()
   @Delete(':id')
   async deleteType(@Param('id', ParseIntPipe) id: number) {

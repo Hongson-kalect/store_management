@@ -16,7 +16,7 @@ import { CreateFoodDto } from './food.dto.';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Food')
-@Controller('type')
+@Controller('food')
 export class FoodController {
   constructor(private foodService: FoodService) {}
 

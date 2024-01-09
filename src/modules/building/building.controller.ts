@@ -18,7 +18,7 @@ import {
   ResponseStatus,
 } from 'src/interfaces/global.type';
 import { CreateBuildingDto, GetBuildingDto } from './building.dto.';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Building')
 @Controller('building')
@@ -39,6 +39,7 @@ export class BuildingController {
     }
   }
 
+  @ApiBody({ type: CreateBuildingDto })
   @Public()
   @Get(':id')
   async getBuildingById(@Param('id', ParseIntPipe) id: number) {
