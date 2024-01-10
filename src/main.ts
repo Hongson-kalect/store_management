@@ -1,6 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import {
+  SwaggerModule,
+  DocumentBuilder,
+  SwaggerDocumentOptions,
+} from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 // import { InterCeptor } from './modules/utils/intercepters/intercepter';
 
@@ -15,7 +19,11 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('PAN')
     .build();
-  const document = SwaggerModule.createDocument(app, config);
+
+  const options: SwaggerDocumentOptions = {
+    deepScanRoutes: true,
+  };
+  const document = SwaggerModule.createDocument(app, config, options);
   SwaggerModule.setup('api/document', app, document);
 
   // app.useGlobalInterceptors(new InterCeptor());
