@@ -28,6 +28,6 @@ async function bootstrap() {
 
   // app.useGlobalInterceptors(new InterCeptor());
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(3331);
+  await app.listen(process.env.PORT, '0.0.0.0');
 }
 bootstrap();
